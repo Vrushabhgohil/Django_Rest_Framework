@@ -1,0 +1,38 @@
+{% load rest_framework %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Data</title>
+    <style>
+        body{
+            margin: 50px 25%;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        a,p{
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: bold;
+            color:dodgerblue
+        }
+        div{
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        {% for i in emp %}
+            <p>id : {{i.id}}</p>        
+            <p>name : {{i.name}}</p>        
+            <p>email : {{i.email}}</p>        
+            <p>Department : {{i.department_id}}</p>  
+            <hr>      
+        {% endfor %}
+    </div>
+
+    <a href="/myapp/departmentwithhtml">Department >> </a>
+</body>
+</html>
