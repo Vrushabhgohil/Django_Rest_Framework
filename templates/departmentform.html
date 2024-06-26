@@ -1,0 +1,24 @@
+{% load rest_framework %}{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Form</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+
+</head>
+<body>
+    <div class="form-container">
+        <h2>Department Form</h2>
+        <form action="{% url 'departmentregistration' %}" method="POST">
+            {% csrf_token %}
+            {% render_form serializer %}
+            <button type="submit">Submit</button>
+            {% if msg %}
+                <p style="color: red; font-size: 14px;letter-spacing: 1px;">Message : {{msg}}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>

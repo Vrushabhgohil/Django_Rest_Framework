@@ -1,10 +1,13 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from rest_framework.views import APIView,status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from myapp.models import Department, Employee
 from rest_framework.renderers import TemplateHTMLRenderer
 from myapp.serializers import DepartmentSerializers, EmployeeSerializers
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
 
 
@@ -133,7 +136,7 @@ class EmployeePutPatchDelete(APIView):
         return Response({"Message":"Employee not found"},status=status.HTTP_400_BAD_REQUEST)
         
 @api_view(['GET'])
-def Employeeofdepartment(self,pk):
+def Employeeofdepartment(self,pk): 
     """
         this function is for get employes' record in one department
     """
@@ -167,6 +170,7 @@ class TemplateGetEmployee(APIView):
         """
         emp = Employee.objects.all()
         return Response({"emp":emp})
+
 class TemplateGetDepartment(APIView):
     """
         This class is to get department data in frontend html page
@@ -180,7 +184,7 @@ class TemplateGetDepartment(APIView):
         """
         dept = Department.objects.all()
         return Response({"dept":dept})
-    
+
 
 class TemplateGetEmpOfDept(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -193,10 +197,10 @@ class TemplateGetEmpOfDept(APIView):
             if dept and emps:
                 return Response({"dept":dept,"emps":emps})
             elif dept and not emps:   
-                    return Response({"dept":dept,"msg":f"No Employees!! in {dept.name} department you should hire."})
+                    return Response({"depts":dept,"msg":f"No Employees!! in {dept.name} department you should hire."})
         except Exception:
             return Response({"msg":"There is no Department Registerd in this id"})
-        
+
 class FormEmployee(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'employeeform.html'
@@ -211,3 +215,27 @@ class FormEmployee(APIView):
             serializer.save()
             return redirect('employee')
         return Response({'serializer':serializer,"msg":"Something went wrong"})
+
+
+class FormDepartment(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'departmentform.html'
+
+    def get(self,request):
+        serializer = DepartmentSerializers()
+        return Response({'serializer':serializer})
+
+    def post(self,request):
+        serializer = DepartmentSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('department')
+        return Response({'serializer':serializer,'msg':'Something went wrong'})
+
+class Home(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        content = {'message': 'Hello, World!'}
+        return Response(content)

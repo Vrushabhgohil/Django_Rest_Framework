@@ -22,15 +22,18 @@
     </style>
 </head>
 <body>
-    <div>
-        {% if dept %}
-            <p>Department id : {{dept.id}}</p>        
-            <p>Department name : {{dept.name}}</p>        
-            <p>Department Manager: {{dept.manager}}</p>  
+    {% if depts %}
+        <h3 style="color: green;">Employees Of the {{depts.name}} Department</h3>
+    {% else %}
+        <h3 style="color: green;">Employees Of the {{dept.name}} Department</h3>
+    {% endif %}
+        <div>
+        {% if depts %}
+            <p>id : {{depts.id}}</p>        
+            <p>name : {{depts.name}}</p>        
+            <p>Manager : {{depts.manager}}</p>  
             <hr>      
         {% endif %}
-    </div>
-    <div>
         {% if msg %}
             <p style="color: red; font-size: 14px;letter-spacing: 1px;">Message : {{msg}}</p>
         {% else %}

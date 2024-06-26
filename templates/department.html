@@ -22,15 +22,17 @@
     </style>
 </head>
 <body>
+    <h2 style="color: green;">Employees of {{dept.name}} Department</h2>
     <div>
         {% for i in dept %}
             <p>id : {{i.id}}</p>        
             <p>name : {{i.name}}</p>        
-            <p>Manager : {{i.manager}}</p>        
+            <p>Manager : {{i.manager}}</p>  
+            <p><a href="/myapp/empofdeptwithhtml/{{i.id}}">Find Employees</a></p>      
             <hr>      
         {% endfor %}
     </div>
-    <a href="/myapp/employeewithhtml"> << Employee</a>
+    <a href="/myapp/employeewithhtml" style="color: red;"> << Employee</a>
 
 </body>
 </html>
