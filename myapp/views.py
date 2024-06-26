@@ -233,10 +233,3 @@ class FormDepartment(APIView):
             return redirect('department')
         return Response({'serializer':serializer,'msg':'Something went wrong'})
 
-class Home(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)

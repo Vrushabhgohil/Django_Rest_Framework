@@ -14,4 +14,4 @@ class myModelTestCase(TestCase):
         url = reverse('employee')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'parth')
+        self.assertContains(response, 'abhisek')
